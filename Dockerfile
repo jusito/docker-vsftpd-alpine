@@ -140,7 +140,7 @@ ENV MY_GROUP_ID=10000 \
 
 COPY ["entrypoint.sh", "/home/entrypoint.sh"]
 
-RUN apk add --no-cache vsftpd db-utils && \
+RUN apk add --no-cache vsftpd && \
 	apk del --quiet --no-cache --progress --purge && \
 	rm -rf /var/cache/apk/* && \
 	\
