@@ -1,0 +1,7 @@
+services:
+  - docker
+
+script:
+  - docker build -t "jusito/docker-vsftpd-alpine:base" .
+  - docker build -t "jusito/docker-vsftpd-alpine:simple" "configurations/simple"
+  
