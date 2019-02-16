@@ -13,6 +13,12 @@ Syntax: docker -d [Options] jusito/ddocker-vsftpd-alpine:*TAG*
 5. Persistent data? `-v MyFTPServer:/home/*USER*/`
 
 ### Example:
+* Only one user
+* FTP Login docker, password 123
+* Data uploaded should be owned by user 124 and group 124
+* External ports are 10020, 10021, 10090-10100
+* A volume with existing data or a new volume should be used
+
 ```
 docker run -d \
  -e MY_NAME="docker" -e MY_PASSWORD="123" \

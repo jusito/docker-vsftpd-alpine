@@ -1,7 +1,13 @@
+dist: xenial
+
 services:
   - docker
+  
+language:
+  - bash
+
+before_install:
+  - sudo apt-get install -y libdigest-sha3-perl
 
 script:
-  - docker build -t "jusito/docker-vsftpd-alpine:base" .
-  - docker build -t "jusito/docker-vsftpd-alpine:simple" "configurations/simple"
-  
+  - bash test/testCaseAll.sh

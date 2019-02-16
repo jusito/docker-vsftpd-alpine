@@ -5,6 +5,9 @@ ENV MY_GROUP_ID=10000 \
 	MY_NAME=docker \
 	MY_PASSWORD="" \
 	\
+	TEST_MODE=false \
+	DEBUGGING=false \
+	\
 	CONFIG_FILE="/etc/vsftpd/vsftpd.conf" \
 	\
 	allow_anon_ssl=NO \

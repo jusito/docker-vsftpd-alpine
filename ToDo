@@ -1,0 +1,3 @@
+# TEST_MODE -> startup and check if working, download / upload a file
+
+# DEBUGGING -> set -o xtrace in every script
