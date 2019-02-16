@@ -1,0 +1,69 @@
+allowEveryConfig:
+accept
+alarm
+bind
+brk
+chdir
+chmod
+close
+connect
+exit_group
+fchmod
+fchown
+fcntl, 2, F_GETFL
+fcntl, 2, F_SETLKW
+fcntl, 2, F_SETLK
+fcntl, 2, F_SETLK
+fcntl, 2, F_SETFL, 3, O_RDWR|O_NONBLOCK
+fcntl, 2, F_SETFL, 3, O_RDWR
+fcntl, 3, kOpenFlags|O_ACCMODE, 2, F_SETFL
+fcntl, 2, F_SETOWN, 3, vsf_sysutil_getpid()
+fstat
+ftruncate
+getcwd
+getdents
+getpid
+getsockopt, 2, SOL_SOCKET, 3, SO_ERROR
+gettimeofday
+listen
+lstat
+lseek
+mkdir
+mmap, 3, PROT_READ|PROT_WRITE, 4, MAP_PRIVATE|MAP_ANON
+mmap, 3, PROT_READ, 4, MAP_SHARED
+mprotect, 3, PROT_READ
+munmap
+nanosleep
+open, 2, open_flag
+openat, 3, open_flag
+read
+readlink
+recvfrom, 4, MSG_PEEK
+recvmsg, 3, 0
+rename
+restart_syscall
+rmdir
+rt_sigaction
+rt_sigreturn
+select
+sendfile
+sendmsg, 3, 0
+sendto, 6, 0
+setsockopt, 2, SOL_SOCKET, 3, SO_REUSEADDR
+setsockopt, 2, IPPROTO_TCP, 3, TCP_NODELAY
+setsockopt, 2, SOL_SOCKET, 3, SO_KEEPALIVE
+setsockopt, 2, SOL_SOCKET, 3, SO_LINGER
+setsockopt, 2, IPPROTO_IP, 3, IP_TOS
+shutdown
+socket, 1, PF_INET, 2, SOCK_STREAM, 3, IPPROTO_TCP
+socket, 1, PF_INET6, 2, SOCK_STREAM, 3, IPPROTO_TCP
+stat
+umask
+unlink
+utime
+utimes
+write
+
+RejectEveryConfig:
+mremap, ENOSYS
+socket, EACCES

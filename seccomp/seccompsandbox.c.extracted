@@ -1,0 +1,114 @@
+(x) syscall, args ...
+x = nr arg match
+
+seccomp_sandbox_setup_data_connections:
+bind
+select
+
+(3) socket, 1, PF_INET, 2, SOCK_STREAM, 3, IPPROTO_TCP
+(3) socket, 1, PF_INET6, 2, SOCK_STREAM, 3, IPPROTO_TCP
+
+if (tunable_port_enable)
+    connect
+    (2) getsockopt, 2, SOL_SOCKET, 3, SO_ERROR
+    (2) setsockopt, 2, SOL_SOCKET, 3, SO_REUSEADDR
+    (1) fcntl, 2, F_GETFL
+    (2) fcntl, 2, F_SETFL, 3, O_RDWR|O_NONBLOCK
+    (2) fcntl, 2, F_SETFL, 3, O_RDWR
+    
+if (tunable_pasv_enable)
+    listen
+    accept
+    
+seccomp_sandbox_setup_base:
+read
+write
+(2) mmap, 3, PROT_READ|PROT_WRITE, 4, MAP_PRIVATE|MAP_ANON
+(1) mprotect, 3, PROT_READ
+munmap
+brk
+(-) mremap, ENOSYS
+gettimeofday
+rt_sigreturn
+restart_syscall
+close
+exit_group
+
+seccomp_sandbox_setup_prelogin:
+seccomp_sandbox_setup_base
+(1) recvfrom, 4, MSG_PEEK
+nanosleep
+getpid
+shutdown
+(1) fcntl, 2, F_GETFL
+(2) fcntl, 3, kOpenFlags|O_ACCMODE, 2, F_SETFL
+
+if (tunable_idle_session_timeout > 0)
+    rt_sigaction
+    alarm
+if (tunable_xferlog_enable || tunable_dual_log_enable)
+    (1) fcntl, 2, F_SETLKW
+    (1) fcntl, 2, F_SETLK
+if (tunable_ssl_enable)
+    (1) recvmsg, 3, 0
+    (2) setsockopt, 2, IPPROTO_TCP, 3, TCP_NODELAY
+if (tunable_syslog_enable)
+    (-) socket, EACCES
+    
+seccomp_sandbox_setup_postlogin:
+lstat
+seccomp_sandbox_setup_prelogin
+(1) fcntl, 2, F_SETLKW
+(1) fcntl, 2, F_SETLK
+(2) fcntl, 2, F_SETOWN, 3, vsf_sysutil_getpid()
+(2) setsockopt, 2, SOL_SOCKET, 3, SO_KEEPALIVE
+(2) setsockopt, 2, SOL_SOCKET, 3, SO_LINGER
+(2) setsockopt, 2, IPPROTO_IP, 3, IP_TOS
+fstat
+lseek
+(1) open, 2, open_flag
+(1) openat, 3, open_flag
+stat
+readlink
+getcwd
+chdir
+getdents
+umask
+
+if (tunable_use_sendfile)
+    sendfile
+if (tunable_idle_session_timeout > 0 || tunable_data_connection_timeout > 0 || tunable_async_abor_enable)
+    rt_sigaction
+if (tunable_idle_session_timeout > 0 || tunable_data_connection_timeout > 0)
+    alarm
+if (tunable_one_process_model && is_anon && tunable_chown_uploads)
+    fchmod
+    fchown
+else
+    (1) recvmsg, 3, 0
+    if ((is_anon && tunable_chown_uploads) || tunable_ssl_enable)
+        (1) sendmsg, 3, 0
+    if (tunable_syslog_enable)
+        (1) sendto, 6, 0
+    if (tunable_text_userdb_names)
+        (-) socket, EACCES
+        (2) mmap, 3, PROT_READ, 4, MAP_SHARED
+    if (tunable_write_enable)
+        if (!is_anon || tunable_anon_mkdir_write_enable)
+            mkdir
+        if (!is_anon || tunable_anon_other_write_enable || tunable_delete_failed_uploads)
+            unlink
+        if (!is_anon || tunable_anon_other_write_enable)
+            rmdir
+            rename
+            ftruncate
+            if (tunable_mdtm_write)
+                utime
+                utimes
+        if (!is_anon && tunable_chmod_enable)
+            chmod
+
+seccomp_sandbox_setup_postlogin_broker:
+seccomp_sandbox_setup_base
+seccomp_sandbox_setup_data_connections
+(1) sendmsg, 3, 0
