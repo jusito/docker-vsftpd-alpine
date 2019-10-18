@@ -139,7 +139,7 @@ ENV MY_GROUP_ID=10000 \
 	vsftpd_log_file="/var/log/vsftpd.log" \
 	xferlog_file="/var/log/xferlog" \
 	\
-	seccomp_sandbox=NO \
+	seccomp_sandbox=YES \
 	allow_writeable_chroot=YES
 
 COPY ["entrypoint.sh", "entrypointTestMode.sh", "/home/"]
