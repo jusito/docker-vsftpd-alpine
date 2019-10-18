@@ -4,7 +4,7 @@ State: Working but could be improved here and there.
 
 ## Getting Started
 ``` 
-Syntax: docker -d [Options] jusito/ddocker-vsftpd-alpine:*TAG*
+Syntax: docker -d [Options] jusito/vsftpd-alpine:*TAG*
 ```
 1. Which use case? Choose your Tag below.
 2. Pick name & password. `-e MY_NAME="docker" -e MY_PASSWORD="MySecurePW"`
@@ -26,7 +26,7 @@ docker run -it --rm \
  -e pasv_address="YourHostIP(not domain)" \
  -p 10020:20 -p 10021:21 -p 10090-10100:10090-10100 \
  -v VolumeToManage:/home/docker/ \
- jusito/docker-vsftpd-alpine:simple
+ jusito/vsftpd-alpine:simple
 ```
 
 ### Example with Windows:
@@ -39,7 +39,7 @@ docker run -it --rm \
  -p 10020:20 -p 10021:21 -p 10090-10100:10090-10100 \
  -v VolumeToManage:/home/docker/ \
  -e pasv_address="YourHostIP(not domain)" \
- jusito/docker-vsftpd-alpine:simple
+ jusito/vsftpd-alpine:simple
 ```
 
 
