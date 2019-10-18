@@ -1,7 +1,6 @@
 FROM jusito/docker-vsftpd-alpine:base
 
 ENV anonymous_enable=NO \
-	chroot_local_user=NO \
 	local_enable=YES \
 	passwd_chroot_enable=YES \
 	pasv_enable=YES \
