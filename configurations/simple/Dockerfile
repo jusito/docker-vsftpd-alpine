@@ -1,4 +1,4 @@
-FROM jusito/docker-vsftpd-alpine:base
+FROM jusito/vsftpd:base
 
 ENV anonymous_enable=NO \
 	local_enable=YES \
