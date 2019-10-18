@@ -1,4 +1,4 @@
-FROM jusito/vsftpd:base
+FROM jusito/vsftpd-alpine:base
 
 ENV anonymous_enable=NO \
 	local_enable=YES \
