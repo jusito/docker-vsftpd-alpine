@@ -234,7 +234,7 @@ Example Mount: ftp://1.2.3.4:10021
 
 ### FAQ
 
-* seccomp_sandbox=NO ? (500 OOPS: 500 OOPS: child died)[https://bugzilla.redhat.com/show_bug.cgi?id=845980]
+* seccomp\_sandbox=NO ? (500 OOPS: 500 OOPS: child died)[https://bugzilla.redhat.com/show_bug.cgi?id=845980]
 * anonymous_enable=YES ? Username: anonymous
 * allow\_writeable\_chroot=NO & chroot\_local\_user=NO? 500 OOPS: vsftpd: refusing to run with writable root inside chroot
 * pasv_enable=YES ? Data Connection
