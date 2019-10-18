@@ -15,11 +15,7 @@ setVariable() {
 	default=$4
 	target="$CONFIG_FILE"
 	
-	set +e
-	echo "$value" | grep -Eiq "$pattern"
-	error=$?
-	set -e
-	if [ "1" = "$error" ]; then
+	if ! echo "$value" | grep -Eiq "$pattern"; then
 		echo "illegal value($value) for $key, fallback to ($default), used regex pattern $pattern"
 		value="$default"
 	fi
@@ -119,7 +115,7 @@ setConfig() {
 	setVariable "virtual_use_local_privs" "${virtual_use_local_privs:?}" "$patternBoolean" "NO"
 	setVariable "write_enable" "${write_enable:?}" "$patternBoolean" "NO"
 	setVariable "xferlog_enable" "${xferlog_enable:?}" "$patternBoolean" "NO"
-	setVariable "xferlog_std_format" "${$xferlog_std_format:?}" "$patternBoolean" "NO"
+	setVariable "xferlog_std_format" "${xferlog_std_format:?}" "$patternBoolean" "NO"
 	
 	# numerical
 	setVariable "accept_timeout" "${accept_timeout:?}" "$patternNumber" "60"
@@ -146,13 +142,16 @@ setConfig() {
 	# strings
 	# shellcheck disable=SC2154
 	setVariable "anon_root" "$anon_root" "$patternString" ""
-	setVariable "banned_email_file" "${banned_email_file:?}" "$patternString" "/etc/vsftpd.banned_emails"
+	# shellcheck disable=SC2154
+	setVariable "banned_email_file" "${banned_email_file}" "$patternString" "/etc/vsftpd.banned_emails"
 	# shellcheck disable=SC2154
 	setVariable "banner_file" "$banner_file" "$patternString" ""
 	# shellcheck disable=SC2154
 	setVariable "ca_certs_file" "$ca_certs_file" "$patternString" ""
-	setVariable "chown_username" "${chown_username:?}" "$patternString" "root"
-	setVariable "chroot_list_file" "${chroot_list_file:?}" "$patternString" "/etc/vsftpd.chroot_list"
+	# shellcheck disable=SC2154
+	setVariable "chown_username" "${chown_username}" "$patternString" "root"
+	# shellcheck disable=SC2154
+	setVariable "chroot_list_file" "${chroot_list_file}" "$patternString" "/etc/vsftpd.chroot_list"
 	# shellcheck disable=SC2154
 	setVariable "cmds_allowed" "$cmds_allowed" "$patternString" ""
 	# shellcheck disable=SC2154
@@ -163,11 +162,14 @@ setConfig() {
 	setVariable "dsa_cert_file" "$dsa_cert_file" "$patternString" ""
 	# shellcheck disable=SC2154
 	setVariable "dsa_private_key_file" "$dsa_private_key_file" "$patternString" ""
-	setVariable "email_password_file" "${email_password_file:?}" "$patternString" "/etc/vsftpd.email_passwords"
-	setVariable "ftp_username" "${ftp_username:?}" "$patternString" "ftp"
+	# shellcheck disable=SC2154
+	setVariable "email_password_file" "${email_password_file}" "$patternString" "/etc/vsftpd.email_passwords"
+	# shellcheck disable=SC2154
+	setVariable "ftp_username" "${ftp_username}" "$patternString" "ftp"
 	# shellcheck disable=SC2154
 	setVariable "ftpd_banner" "$ftpd_banner" "$patternString" ""
-	setVariable "guest_username" "${guest_username:?}" "$patternString" "ftp"
+	# shellcheck disable=SC2154
+	setVariable "guest_username" "${guest_username}" "$patternString" "ftp"
 	# shellcheck disable=SC2154
 	setVariable "hide_file" "$hide_file" "$patternString" ""
 	# shellcheck disable=SC2154
@@ -176,25 +178,36 @@ setConfig() {
 	setVariable "listen_address6" "$listen_address6" "$patternString" ""
 	# shellcheck disable=SC2154
 	setVariable "local_root" "$local_root" "$patternString" ""
-	setVariable "message_file" "${message_file:?}" "$patternString" ".message"
-	setVariable "nopriv_user" "${nopriv_user:?}" "$patternString" "nobody"
-	setVariable "pam_service_name" "${pam_service_name:?}" "$patternString" "ftp"
-	setVariable "pasv_address" "${pasv_address:?}" "$patternString" "" #$(/sbin/ip route|awk '/default/ { print $3 }')
-	setVariable "rsa_cert_file" "${rsa_cert_file:?}" "$patternString" "/usr/share/ssl/certs/vsftpd.pem"
+	# shellcheck disable=SC2154
+	setVariable "message_file" "${message_file}" "$patternString" ".message"
+	# shellcheck disable=SC2154
+	setVariable "nopriv_user" "${nopriv_user}" "$patternString" "nobody"
+	# shellcheck disable=SC2154
+	setVariable "pam_service_name" "${pam_service_name}" "$patternString" "ftp"
+	# shellcheck disable=SC2154
+	setVariable "pasv_address" "${pasv_address}" "$patternString" "" #$(/sbin/ip route|awk '/default/ { print $3 }')
+	# shellcheck disable=SC2154
+	setVariable "rsa_cert_file" "${rsa_cert_file}" "$patternString" "/usr/share/ssl/certs/vsftpd.pem"
 	# shellcheck disable=SC2154
 	setVariable "rsa_private_key_file" "$rsa_private_key_file" "$patternString" ""
-	setVariable "secure_chroot_dir" "${secure_chroot_dir:?}" "$patternString" "/usr/share/empty"
-	setVariable "ssl_ciphers" "${ssl_ciphers:?}" "$patternString" "DES-CBC3-SHA"
+	# shellcheck disable=SC2154
+	setVariable "secure_chroot_dir" "${secure_chroot_dir}" "$patternString" "/usr/share/empty"
+	# shellcheck disable=SC2154
+	setVariable "ssl_ciphers" "${ssl_ciphers}" "$patternString" "DES-CBC3-SHA"
 	# shellcheck disable=SC2154
 	setVariable "user_config_dir" "$user_config_dir" "$patternString" ""
 	# shellcheck disable=SC2154
 	setVariable "user_sub_token" "$user_sub_token" "$patternString" ""
-	setVariable "userlist_file" "${userlist_file:?}" "$patternString" "/etc/vsftpd.user_list"
-	setVariable "vsftpd_log_file" "${vsftpd_log_file:?}" "$patternString" "/var/log/vsftpd.log"
-	setVariable "xferlog_file" "${xferlog_file:?}" "$patternString" "/var/log/xferlog"
+	# shellcheck disable=SC2154
+	setVariable "userlist_file" "${userlist_file}" "$patternString" "/etc/vsftpd.user_list"
+	# shellcheck disable=SC2154
+	setVariable "vsftpd_log_file" "${vsftpd_log_file}" "$patternString" "/var/log/vsftpd.log"
+	# shellcheck disable=SC2154
+	setVariable "xferlog_file" "${xferlog_file}" "$patternString" "/var/log/xferlog"
 	
 	# needed for dockerize
 	setVariable "seccomp_sandbox" "${seccomp_sandbox:?}" "$patternBoolean" "YES"
+	# shellcheck disable=SC2154
 	setVariable "allow_writeable_chroot" "${allow_writeable_chroot:?}" "$patternBoolean" "NO"
 }
 
