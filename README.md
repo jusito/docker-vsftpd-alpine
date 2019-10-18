@@ -25,7 +25,7 @@ docker run -d \
  -e MY_USER_ID="124" -e MY_GROUP_ID="124" \
  -p 10020:20 -p 10021:21 -p 10090-10100:10090-10100 \
  -v MyFTPServer:/home/docker/ \
- jusito/ddocker-vsftpd-alpine:simple
+ jusito/docker-vsftpd-alpine:simple
 ```
 
 ## Tags
@@ -49,7 +49,7 @@ write_enable=YES any FTP command allowed
 No better way?
 seccomp_sandbox=NO seccomp is to strict "500 OOPS: 500 OOPS: child died" https://bugzilla.redhat.com/show_bug.cgi?id=845980
 pasv_enable=YES Data Connection
-allow_writeable_chroot=NO fixes "Fixing 500 OOPS: vsftpd: refusing to run with writable root inside chroot"
+allow_writeable_chroot=NO chroot_local_user=NO, fixes "Fixing 500 OOPS: vsftpd: refusing to run with writable root inside chroot"
 
 ## Additional Informations
 ### Bug Windows 

@@ -1,1 +1,5 @@
-/.README.md.html
+.project
+.travis.yml
+LICENSE
+README.*
+test/*
