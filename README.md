@@ -1,6 +1,6 @@
 # FTP Server VSFTPD meets alpine
 FTP Server image with: (http://vsftpd.beasts.org)
-[![Build Status](https://travis-ci.org/jusito/ddocker-vsftpd-alpine.svg?branch=master)](https://travis-ci.org/jusito/docker-vsftpd-alpine)
+State: Working but could be improved here and there.
 
 ## Getting Started
 ``` 
@@ -13,7 +13,7 @@ Syntax: docker -d [Options] jusito/ddocker-vsftpd-alpine:*TAG*
 5. Volume to access? `-v VolumeToManage:/home/*USER*/`
 
 ### Example:
-* Only one user
+* Only one user 
 * FTP Login docker, password MySecurePW
 * Data uploaded should be owned by user 124 and group 124
 * External ports are 10020, 10021, 10090-10100
@@ -53,7 +53,6 @@ docker run -it --rm \
 
 ### base
 Contains every (config variable with default)[http://vsftpd.beasts.org/vsftpd_conf.html]:
-
 
 ## Environment Variables
 
@@ -232,6 +231,7 @@ In man page:
 ### Bug Windows 
 pasv_address => set to ip for windows usage
 (thanks to onjin@git)[https://github.com/onjin/docker-alpine-vsftpd]
+Example Mount: ftp://1.2.3.4:10021
 
 ### FAQ
 
