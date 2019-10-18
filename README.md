@@ -20,20 +20,19 @@ Syntax: docker -d [Options] jusito/vsftpd-alpine:*TAG*
 * A volume with existing data or a new volume should be used
 
 ```
-docker run -it --rm \
+docker run -d \
  -e MY_NAME="docker" -e MY_PASSWORD="MySecurePW" \
  -e MY_USER_ID="10000" -e MY_GROUP_ID="10000" \
- -e pasv_address="YourHostIP(not domain)" \
  -p 10020:20 -p 10021:21 -p 10090-10100:10090-10100 \
  -v VolumeToManage:/home/docker/ \
  jusito/vsftpd-alpine:simple
 ```
 
-### Example with Windows:
+### Example for Windows-Network-Mount:
 You need: `-e pasv_address="YourHostIP(not domain)"`
 
 ```
-docker run -it --rm \
+docker run -d \
  -e MY_NAME="docker" -e MY_PASSWORD="MySecurePW" \
  -e MY_USER_ID="10000" -e MY_GROUP_ID="10000" \
  -p 10020:20 -p 10021:21 -p 10090-10100:10090-10100 \
@@ -46,10 +45,10 @@ docker run -it --rm \
 ## Tags
 
 ### simple
-= one user
-= for windows / linux / filezilla...
-- no SSL
-- no seccomp / ...
+= one user \
+= for windows / linux / filezilla... \
+\- no SSL \
+\- no seccomp / ...
 
 ### base
 Contains every (config variable with default)[http://vsftpd.beasts.org/vsftpd_conf.html]:
