@@ -11,7 +11,8 @@ set -o pipefail
 IMAGE="jusito/docker-vsftpd-alpine"
 
 echo "build base"
-docker build -t "$IMAGE" .
+docker rmi "$IMAGE:base"
+docker build -t "$IMAGE:base" "base/"
 
 # shellcheck disable=SC2045
 for tag in $(ls configurations) #ls is fragile

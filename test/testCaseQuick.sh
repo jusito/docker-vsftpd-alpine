@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export DEBUGGING=false
 if [ "${DEBUGGING}" = "true" ]; then
 	set -o xtrace
 fi
@@ -10,12 +9,14 @@ set -o nounset
 set -o pipefail
 
 IMAGE="jusito/docker-vsftpd-alpine"
+tag="simple"
 
 bash test/testStyle.sh
 
-tag=simple
-echo "build base"
-docker build -t "$IMAGE:base" .
+
+echo "build: ${IMAGE}:base"
+docker rmi "${IMAGE}:base" || true
+docker build -t "${IMAGE}:base" "base/"
 
 echo "[testBuild][INFO]build configuration/$tag"
 docker rmi "$IMAGE:$tag" || true
