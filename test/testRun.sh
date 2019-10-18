@@ -8,8 +8,10 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+IMAGE="jusito/docker-vsftpd-alpine"
+
 # shellcheck disable=SC2045
-for tag in $(ls modpacks) #ls is fragile
+for tag in $(ls configurations) #ls is fragile
 do
 	echo "[testRun][INFO]running $tag"
 	if ! docker run -ti --name "JusitoTesting" --rm -e TEST_MODE=true -e DEBUGGING=${DEBUGGING} "$IMAGE:$tag"; then

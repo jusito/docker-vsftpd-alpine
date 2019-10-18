@@ -9,7 +9,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-export IMAGE="jusito/docker-vsftpd-alpine"
+IMAGE="jusito/docker-vsftpd-alpine"
 
 bash test/testStyle.sh
 bash test/testBuild.sh

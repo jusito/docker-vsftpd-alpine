@@ -1,6 +1,12 @@
 #!/bin/sh
 
-set -e
+if [ "${DEBUGGING}" = "true" ]; then
+	set -o xtrace
+fi
+
+set -o errexit
+set -o nounset
+set -o pipefail
 
 setVariable() {
 	key=$1
@@ -203,15 +209,26 @@ createUser() {
 	echo "${MY_NAME}:${MY_PASSWORD}" | /usr/sbin/chpasswd
 }
 
+# check for test mode
+if [ "$TEST_MODE" = "true" ]; then
+	echo "[entrypoint][INFO]TEST_MODE = true"
+fi
+
 # preparation
 createUser
 setConfig
 
-# start
 trap 'pkill -15 vsftpd' 15
 /usr/sbin/vsftpd "$CONFIG_FILE" &
 
-# wait until ended
-echo "vsftpd started"
-wait "$!"
-echo "Vsftpd ended"
+# on test mode check if server is up
+if [ "$TEST_MODE" = "true" ]; then
+	echo "[entrypoint][INFO]starting entrypointTestMode"
+	sh "/home/entrypointTestMode.sh"
+
+# on normal mode, just wait until end / trap
+else
+	echo "vsftpd started"
+	wait "$!"
+	echo "Vsftpd ended"
+fi
